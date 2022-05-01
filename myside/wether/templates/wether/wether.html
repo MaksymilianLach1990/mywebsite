@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Log In
+Wether
 {% endblock %}
 
 {% block link %}
@@ -12,17 +12,16 @@ Log In
 
 {% block main %}
 <div>
-    <h3>Login</h3>
+    <h3>Check Wether</h3>
 </div>
 <br><hr><br>
 <div>
     <form method="post">
         {% csrf_token %}
 
-        {{ form|crispy }}
+        <h4>Wybierz paramatry</h4>
         
-        <p>Don't have an account? Create one <a href="/sing-up">Here</a>!</p>
-        <button type="submit" class="btn btn-success">Log In</button>
+        <button type="submit" class="btn btn-success">Send</button>
     </form>
 </div>
 {% endblock %}
