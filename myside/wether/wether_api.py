@@ -2,9 +2,9 @@ import meteomatics.api as api
 import datetime as dt
 import pandas as pd
 
-username = 'myhome_lach'
-password = 'WtV3el70ZW'
-coordinates = [(52.520551,13.461804)]
+username = 'username'
+password = 'password'
+coordinates = [(52.520551,13.461804)] # Neris Les Bains France
 model = 'mix'
 startdate = dt.datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
 enddate = startdate + dt.timedelta(days=2)
