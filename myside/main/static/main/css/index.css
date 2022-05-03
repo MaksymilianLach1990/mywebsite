@@ -5,8 +5,13 @@ html {
 
 body {
     margin: 0 0 100px;
-    /* bottom = footer height */
     padding: 25px;
+}
+
+.main {
+    width: 90%;
+    margin: 0 auto;
+
 }
 
 footer {
