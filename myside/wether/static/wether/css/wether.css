@@ -1,0 +1,17 @@
+table {
+    border: 1px solid;
+}
+
+th {
+    border: 1px solid;
+    font-size: 25px;
+    padding: 20px;
+    margin: 5px;
+}
+
+td {
+    border: 1px solid;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+}

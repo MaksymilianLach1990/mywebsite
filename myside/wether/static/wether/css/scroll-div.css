@@ -1,0 +1,29 @@
+.scroll-bg {
+    background: gray;
+    height: 800px;
+    margin: 10% auto;
+}
+
+.scroll-div {
+    background: white;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.scroll-object {
+    color: black;
+    font-family: cursive;
+    font-size: 15px;
+    padding: 10px
+}
+
+.div-graf {
+    height: 500px;
+    border: 2px solid darkblue;
+    width: 100%;
+}
+
+#graf {
+    max-height: 500px;
+}

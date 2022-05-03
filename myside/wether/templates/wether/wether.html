@@ -8,6 +8,8 @@ Wether
 
 {% block link %}
 <!-- Additional files css -->
+<link rel="stylesheet" href="{% static 'wether/css/wether.css' %}">
+<link rel="stylesheet" href="{% static 'wether/css/scroll-div.css' %}">
 {% endblock %}
 
 {% block main %}
@@ -16,16 +18,52 @@ Wether
 </div>
 <br><hr><br>
 <div>
-    <form method="post">
-        {% csrf_token %}
+    
 
-        <h4>Wybierz paramatry</h4>
+
+    <br>
+    <div>
+        <h2>Wether</h2>
+        <div class="div-graf">
+            <canvas id="graf" style="width: 100%; max-height: 400px"></canvas>
+        </div>
+        <div class="div-graf">
+            {% autoescape off %}
+            {{ plot_div }}
+            {% endautoescape %}
+        </div>
+        <div class="scroll-bg">
+            <div class="scroll-div">
+                <div class="scroll-object">
         
-        <button type="submit" class="btn btn-success">Send</button>
-    </form>
+                    <h4>From {{ start }} To {{ end }}</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                            {% for parameter in text %}
+                                <th id="parameter">{{ parameter }}</th>
+                            {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in values %}
+                            <tr>
+                                {% for value in row %}
+                                <td id="value">{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <!-- Additional files js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="static/wether/js/wether.js"></script>
 {% endblock %}
