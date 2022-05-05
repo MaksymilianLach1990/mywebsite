@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Add scenes
+Dialog
 {% endblock %}
 
 {% block link %}
@@ -12,19 +12,28 @@ Add scenes
 
 {% block main %}
 <div>
-    <h3>Dodaj scenkę</h3>
+    <h3>Dialog scenki</h3>
 </div>
 <br><hr><br>
 <div>
-    <h4>Szablon do wypełnienia</h4>
-    {% if message %}
-    <h2>{{ message }}</h2>
-    {% endif %}
+
+    <h2>{{ situation.name }}</h2>
+    <h3>{{ situation.description }}</h3>
+    {% for sentence in dialog_list %}
+    <div>
+        <h2><b>{{ sentence.character_name }}</b></h2><br>
+        <h3>{{ sentence.sentence }}</h3>
+    </div>
+    {% endfor%}
+</div>
+<hr>
+<div>
+    <h2>Dodaj sentencje</h2>
     <form method="post">
         {% csrf_token %}
 
         {{ form|crispy }}
-        
+
         <button type="submit" class="btn btn-success">Add</button>
     </form>
 </div>

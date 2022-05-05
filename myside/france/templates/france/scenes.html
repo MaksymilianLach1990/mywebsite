@@ -17,6 +17,19 @@ Scenes
 <br><hr><br>
 <div>
     <h4>Lista scenek do wyboru</h4>
+    {% if scenes_list %}
+    {% for scene in scenes_list %}
+    <div>
+        <h2>Title: {{ scene.name }}</h2><br>
+        <h4>Opis: {{ scene.description }}</h4>
+        <h5>Data : {{ scene.created_at }}</h5>
+    </div>
+    <a href="{% url 'dialog' scene.id %}">Go to</a>
+    <hr>
+    {% endfor%}
+    {% else %}
+    <h3>{{ message }}</h3>
+    {% endif%}
 </div>
 {% endblock %}
 
