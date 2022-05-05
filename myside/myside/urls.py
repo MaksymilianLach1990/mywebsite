@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include("django.contrib.auth.urls")),
     path('', include("main.urls")),
     path('wether', include('wether.urls')),
+    path('france', include('france.urls')),
 ]
