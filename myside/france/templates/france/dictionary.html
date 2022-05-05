@@ -1,0 +1,50 @@
+{% extends 'france/index.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Add dialog
+{% endblock %}
+
+{% block link %}
+<!-- Additional files css -->
+{% endblock %}
+
+{% block main %}
+<div>
+    <h2>Dodaj nowe słowo</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+        
+        <button type="submit" class="btn btn-success">Add</button>
+    </form>
+</div>
+<br><hr><br>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>World pl</th>
+                <th>World fr</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for world in dictionary %}
+            <tr>
+                <td>{{ world.world_pl }}</td>
+                <td>{{ world.world_fr }}</td>
+                <td>{{ world.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Additional files js -->
+{% endblock %}

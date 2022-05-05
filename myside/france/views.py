@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import ScenesCreateForm, PhraseCreateForm
-from .models import Scenes, Phrase
+from .forms import ScenesCreateForm, PhraseCreateForm, WorldCreateForm
+from .models import Scenes, Phrase, World
 
 # Create your views here.
 
@@ -27,8 +27,9 @@ def add_scenes(request):
         form = ScenesCreateForm(request.POST)
         if form.is_valid():
             form.save()
-            
-            return redirect('/france/add-dialog/<str:form.name>')
+            scene_id = Scenes.objects.filter(name=request.POST['name']).first()
+            print(scene_id.id)
+            return redirect(f'/france/dialog/{scene_id.id}')
         else:
             return redirect("/france/add-scenes")
 
@@ -37,19 +38,20 @@ def add_scenes(request):
         }
     return render(request, 'france/add_scenes.html', context)
 
-def add_dialog(request):
+def dictionary(request):
 
     if request.method == 'POST':
-        form = PhraseCreateForm(request.POST)
+        form = WorldCreateForm(request.POST)
         if form.is_valid():
             form.save()
 
-            return redirect('/france/add-dialog')
+            return redirect('/france/dictionary')
     context = {
-        'form': PhraseCreateForm,
+        'form': WorldCreateForm,
+        'dictionary': World.objects.all(),
         }
 
-    return render(request, 'france/add_dialog.html', context)
+    return render(request, 'france/dictionary.html', context)
 
 def dialog(request, id):
     

@@ -27,3 +27,17 @@ class Phrase(models.Model):
 
     def __str__(self):
         return f'{self.scenes} - {self.order} - {self.created_at}'
+
+
+class World(models.Model):
+    class Meta:
+        ordering = ('world_pl', 'world_fr')
+
+    scenes = models.ForeignKey(Scenes, models.PROTECT, null=True, blank=True)
+    world_pl = models.CharField(max_length=100)
+    world_fr = models.CharField(max_length=100)
+    description = models.TextField(max_length=400)
+    phonetic = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.world_pl} - {self.world_fr}'
