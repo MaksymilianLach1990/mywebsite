@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Space{% endblock %}</title>
+    <title>{% block title %}France{% endblock %}</title>
     <!-- Bootstrap and css -->
     {% block links %}
     
@@ -12,17 +12,26 @@
 </head>
 <body>
     <header>
-        <h1>Nagłówek każdej strony</h1>
-        <h1>Space Sweepers</h1>
+        <h1>Nagłówek każdej strony Francuzki</h1>
         <nav>
-            <h2>Nav bar</h2>
+            <h2>Nav bar dla projektów</h2>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'wether' %}">Wether</a>
             <a href="{% url 'space' %}">Space</a>
+            <a href="{% url 'france' %}">France</a>
         </nav>
     </header>
 
     <main>
+        <br><hr><br>
+        <nav>
+            <h2>Nav bar dla Francji</h2>
+            <a href="{% url 'france' %}">Home</a>
+            <a href="{% url 'scenes' %}">Lista scenek</a>
+            <a href="{% url 'add-scenes' %}">Add scene</a>
+            <a href="{% url 'add-dialog' %}">Add dialog</a>
+        </nav>
+        <br><hr><br>
         {% block main %}
         
         {% endblock %}
