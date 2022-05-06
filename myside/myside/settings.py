@@ -82,19 +82,14 @@ WSGI_APPLICATION = 'myside.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'd42n0fu4nrr5u6',
-#         'USER': 'snnoswixkpmjac',
-#         'PASSWORD': 'd53ce24ae4f404cf13225ffe9fe7fb27eb5e9d409b5dedf4a8b08c8dbe10c04d',
-#         'HOST': 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
-#         'PORT': '5432'
-#     }
-# }
 
-
+#local database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
