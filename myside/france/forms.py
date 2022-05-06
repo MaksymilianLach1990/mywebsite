@@ -10,7 +10,7 @@ class ScenesCreateForm(forms.ModelForm):
 class PhraseCreateForm(forms.ModelForm):
     class Meta:
         model = Phrase
-        fields = ('scenes', 'character_name', 'sentence', 'order')
+        fields = ('character_name', 'sentence')
 
 
 class WorldCreateForm(forms.ModelForm):

@@ -28,6 +28,29 @@ class Phrase(models.Model):
     def __str__(self):
         return f'{self.scenes} - {self.order} - {self.created_at}'
 
+    def go_up(self, phrase_num, scene_num):
+
+        phrase_up = Phrase.objects.filter(scenes=scene_num, order=phrase_num).first()
+        phrase_up.order = 0
+        phrase_up.save()
+        phrase_down = Phrase.objects.filter(scenes=scene_num, order=(phrase_num-1)).first()
+        phrase_down.order = phrase_num
+        phrase_down.save()
+        phrase_new = Phrase.objects.filter(scenes=scene_num, order=0).first()
+        phrase_new.order = phrase_num-1
+        phrase_new.save()
+
+    def go_down(self, phrase_num, scene_num):
+        
+        phrase_down = Phrase.objects.filter(scenes=scene_num, order=phrase_num).first()
+        phrase_down.order = 0
+        phrase_down.save()
+        phrase_up = Phrase.objects.filter(scenes=scene_num, order=(phrase_num+1)).first()
+        phrase_up.order = phrase_num
+        phrase_up.save()
+        phrase_new = Phrase.objects.filter(scenes=scene_num, order=0).first()
+        phrase_new.order = phrase_num+1
+        phrase_new.save()
 
 class World(models.Model):
     class Meta:

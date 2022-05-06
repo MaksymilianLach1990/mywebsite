@@ -75,24 +75,50 @@ def edit_dialog(request, id, phrase, mode):
 
         return redirect(f'/france/edit-dialog/{id}/0/edit')
 
-    
+    if mode == 'order-up':
+        if phrase == 1:
+            return redirect(f'/france/edit-dialog/{id}/0/edit')
 
+        Phrase().go_up(phrase, id)
+        
+        return redirect(f'/france/edit-dialog/{id}/0/edit')
 
-    if request.method == 'POST':
-        form = PhraseCreateForm(request.POST)
-        if form.is_valid():
+    if mode == 'order-down':
+        if phrase == max([phrase.order for phrase in Phrase.objects.filter(scenes=id).all()]):
+            return redirect(f'/france/edit-dialog/{id}/0/edit')
+
+        Phrase().go_down(phrase, id)
+
+        return redirect(f'/france/edit-dialog/{id}/0/edit')
+
+    if mode == 'edit':
+
+        test = "Message"
+        if request.method == 'POST':
+            scene = Scenes.objects.filter(id=id).first() 
+            max_order = Phrase.objects.filter(scenes=id).all()
+            if max_order: 
+                order = max([phrase.order for phrase in max_order])+1
+            else:
+                order = 1
+            character_name = request.POST['character_name']
+            sentence = request.POST['sentence']
+            form = Phrase(scenes=scene, character_name=character_name, sentence=sentence, order=order)
             form.save()
+            return redirect(f'/france/edit-dialog/{id}/0/edit')
 
-            return redirect(f'/france/edit-dialog/{id}')
 
+        situation = Scenes.objects.get(id=id)
+        dialog_list = Phrase.objects.filter(scenes=id).order_by('order')
 
-    situation = Scenes.objects.get(id=id)
-    dialog_list = Phrase.objects.filter(scenes=id).order_by('order')
+        context = {
+            'dialog_list': dialog_list,
+            'situation': situation,
+            'form': PhraseCreateForm,
+            'test': test,
+            }
 
-    context = {
-        'dialog_list': dialog_list,
-        'situation': situation,
-        'form': PhraseCreateForm,
-        }
+        return render(request, 'france/edit_dialog.html', context)
 
-    return render(request, 'france/edit_dialog.html', context)
+    else:
+        return redirect('/france/')
