@@ -17,7 +17,7 @@ Dialog
 <br><hr><br>
 <div>
 
-    <h2>{{ situation.name }}</h2>
+    <h2>{{ situation.name }} | <a class="btn btn-primary" href="{% url 'edit-dialog' situation.id 0 'edit' %}">Edit</a></h2>
     <h3>{{ situation.description }}</h3>
     {% for sentence in dialog_list %}
     <div>
@@ -27,16 +27,7 @@ Dialog
     {% endfor%}
 </div>
 <hr>
-<div>
-    <h2>Dodaj sentencje</h2>
-    <form method="post">
-        {% csrf_token %}
 
-        {{ form|crispy }}
-
-        <button type="submit" class="btn btn-success">Add</button>
-    </form>
-</div>
 {% endblock %}
 
 {% block scripts %}

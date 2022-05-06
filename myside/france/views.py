@@ -6,7 +6,9 @@ from .models import Scenes, Phrase, World
 
 def home(request):
 
-    context = {}
+    scenes_list = Scenes.objects.all()
+
+    context = {'scenes_list': scenes_list}
 
     return render(request, 'france/home.html', context)
 
@@ -55,12 +57,34 @@ def dictionary(request):
 
 def dialog(request, id):
     
+    situation = Scenes.objects.get(id=id)
+    dialog_list = Phrase.objects.filter(scenes=id).order_by('order')
+
+    context = {
+        'dialog_list': dialog_list,
+        'situation': situation,
+        }
+
+    return render(request, 'france/dialog.html', context)
+
+def edit_dialog(request, id, phrase, mode):
+
+    if mode == 'delete-phrase':
+        delete_phrase = Phrase.objects.filter(id=phrase).first()
+        delete_phrase.delete()
+
+        return redirect(f'/france/edit-dialog/{id}/0/edit')
+
+    
+
+
     if request.method == 'POST':
         form = PhraseCreateForm(request.POST)
         if form.is_valid():
             form.save()
 
-            return redirect(f'/france/dialog/{id}')
+            return redirect(f'/france/edit-dialog/{id}')
+
 
     situation = Scenes.objects.get(id=id)
     dialog_list = Phrase.objects.filter(scenes=id).order_by('order')
@@ -71,4 +95,4 @@ def dialog(request, id):
         'form': PhraseCreateForm,
         }
 
-    return render(request, 'france/dialog.html', context)
+    return render(request, 'france/edit_dialog.html', context)

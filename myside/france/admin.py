@@ -13,7 +13,7 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(Phrase)
 class EventAdmin(admin.ModelAdmin):
     fields = ('scenes', 'character_name', 'sentence', 'order', 'created_at')
-    list_display = ('scenes', 'charakter_name', 'sentence', 'order', 'created_at')
+    list_display = ('scenes', 'character_name', 'sentence', 'order', 'created_at')
     ordering = ('scenes', 'created_at')
 
 

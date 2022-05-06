@@ -24,7 +24,7 @@ Scenes
         <h4>Opis: {{ scene.description }}</h4>
         <h5>Data : {{ scene.created_at }}</h5>
     </div>
-    <a href="{% url 'dialog' scene.id %}">Go to</a>
+    <a class="btn btn-primary" href="{% url 'dialog' scene.id %}">Go to</a>
     <hr>
     {% endfor%}
     {% else %}

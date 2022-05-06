@@ -11,6 +11,7 @@ Add dialog
 {% endblock %}
 
 {% block main %}
+
 <div>
     <h2>Dodaj nowe słowo</h2>
     <form method="post">
@@ -20,6 +21,17 @@ Add dialog
         
         <button type="submit" class="btn btn-success">Add</button>
     </form>
+</div>
+<br><hr><br>
+<div>
+    <h2>Wyszukaj słowo</h2>
+    <label for="search-world">Wpisz szukane słowo</label><br>
+    <input type="text" id="search-world" name="search-world">
+    <label for="">Wybierz język w jakim jest słowo</label>
+    <input type="radio" id="fr" name="language">FR</input>
+    <input type="radio" id="pl" name="language">PL</input>
+    <label for="world-description" id="label-description"></label>
+    <p id="world-description"></p>
 </div>
 <br><hr><br>
 <div>
