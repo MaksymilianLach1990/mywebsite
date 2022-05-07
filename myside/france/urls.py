@@ -12,5 +12,6 @@ urlpatterns = [
     path('edit-phrase/<int:scene_pk>/<int:phrase_order>', views.edit_phrase, name='edit-phrase'),
     path('dictionary', views.dictionary, name='dictionary'),
     path('add-world/<int:scene_pk>', views.add_world, name='add-world'),
-    path('edit-world/<int:phrase_id>', views.edit_world, name='edit-world'),
+    path('edit-world/<int:world_id>', views.edit_world, name='edit-world'),
+    path('delete-world/<int:world_id>', views.delete_world, name='delete-world'),
 ]

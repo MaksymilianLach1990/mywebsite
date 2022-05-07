@@ -41,6 +41,7 @@ Add dialog
                 <th>World fr</th>
                 <th>Description</th>
                 <th>Phonetic</th>
+                <th>Operation</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +51,11 @@ Add dialog
                 <td>{{ world.world_fr }}</td>
                 <td>{{ world.description }}</td>
                 <td>{{ world.phonetic }}</td>
+                <td>
+                    <a href="{% url 'edit-world' world.id %}" class="btn btn-primary">Edit world</a>
+                    <a href="{% url 'delete-world' world.id %}" class="btn btn-danger">Delete</a>
+
+                </td>
             </tr>
             {% endfor %}
         </tbody>

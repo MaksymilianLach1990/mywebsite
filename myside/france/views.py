@@ -67,16 +67,33 @@ def add_world(request, scene_pk):
         'form': form,
         }
 
-
     return render(request, 'france/edit_world.html', context)
 
-def edit_world(request, world_pk):
+def edit_world(request, world_id):
+
+    if request.method == 'POST':
+        form = WorldCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect('/france/dictionary')
+
+    world = World.objects.get(id=world_id)
+    form = WorldCreateForm(instance=world)
 
     context ={
-
+        'title': 'Edytuj słowo',
+        'form': form,
     }
 
     return render(request, 'france/edit_world.html', context)
+
+def delete_world(request, world_id):
+
+    world = World.objects.get(id=world_id)
+    world.delete()
+
+    return redirect('/france/dictionary')
 
 def dialog(request, id):
     
