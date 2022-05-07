@@ -69,6 +69,12 @@ def dialog(request, id):
 
 def edit_dialog(request, id, phrase, mode):
 
+    if phrase == 0 and mode == 'delete-scene':
+        delete_scene = Scenes.objects.filter(id=id).first()
+        delete_scene.delete()
+
+        return redirect('/france/scenes')
+
     if mode == 'delete-phrase':
         delete_phrase = Phrase.objects.filter(id=phrase).first()
         delete_phrase.delete()
@@ -97,10 +103,10 @@ def edit_dialog(request, id, phrase, mode):
         if request.method == 'POST':
             scene = Scenes.objects.filter(id=id).first() 
             max_order = Phrase.objects.filter(scenes=id).all()
-            if max_order: 
-                order = max([phrase.order for phrase in max_order])+1
-            else:
+            if len(max_order) == 0: 
                 order = 1
+            else:
+                order = max([phrase.order for phrase in max_order])+1
             character_name = request.POST['character_name']
             sentence = request.POST['sentence']
             form = Phrase(scenes=scene, character_name=character_name, sentence=sentence, order=order)

@@ -19,10 +19,10 @@ class Phrase(models.Model):
     class Meta:
         ordering = ('scenes', 'order')
 
-    scenes = models.ForeignKey(Scenes, models.PROTECT, null=True, blank=True)
+    scenes = models.ForeignKey(Scenes, models.CASCADE, null=True, blank=True)
     character_name = models.CharField(max_length=100, null=False)
     sentence = models.TextField(max_length=400)
-    order = models.IntegerField(unique=True)
+    order = models.IntegerField()
     created_at = models.DateField(default=datetime.date.today, db_index=True)
 
     def __str__(self):
@@ -56,7 +56,7 @@ class World(models.Model):
     class Meta:
         ordering = ('world_pl', 'world_fr')
 
-    scenes = models.ForeignKey(Scenes, models.PROTECT, null=True, blank=True)
+    scenes = models.ForeignKey(Scenes, models.CASCADE, null=True, blank=True)
     world_pl = models.CharField(max_length=100)
     world_fr = models.CharField(max_length=100)
     description = models.TextField(max_length=400)
