@@ -36,7 +36,7 @@ Dialog
         <h3>{{ sentence.sentence }}</h3>
         <div>
             <a href="{% url 'edit-dialog' situation.id sentence.id 'delete-phrase' %}" class="btn btn-danger">Delete</a>
-            <a href="{% url 'edit-dialog' situation.id sentence.id 'edit-phrase' %}" class="btn btn-success">Edit</a>
+            <a href="{% url 'edit-phrase' situation.id sentence.order %}" class="btn btn-success">Edit</a>
             <a href="{% url 'edit-dialog' situation.id sentence.order 'order-up' %}" class="btn btn-success">Up</a>
             <a href="{% url 'edit-dialog' situation.id sentence.order 'order-down' %}" class="btn btn-success">Down</a>
 
@@ -48,13 +48,7 @@ Dialog
 <hr>
 <div>
     <h2>Dodaj sentencje</h2>
-    <form method="post">
-        {% csrf_token %}
-
-        {{ form|crispy }}
-
-        <button type="submit" class="btn btn-success">Add</button>
-    </form>
+    <a href="{% url 'add-phrase' situation.id %}" class="btn btn-success">Add</a>
 </div>
 {% endblock %}
 

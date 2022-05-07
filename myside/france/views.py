@@ -66,7 +66,7 @@ def dialog(request, id):
         }
 
     return render(request, 'france/dialog.html', context)
-
+######################
 def edit_dialog(request, id, phrase, mode):
 
     if phrase == 0 and mode == 'delete-scene':
@@ -100,19 +100,6 @@ def edit_dialog(request, id, phrase, mode):
     if mode == 'edit':
 
         test = "Message"
-        if request.method == 'POST':
-            scene = Scenes.objects.filter(id=id).first() 
-            max_order = Phrase.objects.filter(scenes=id).all()
-            if len(max_order) == 0: 
-                order = 1
-            else:
-                order = max([phrase.order for phrase in max_order])+1
-            character_name = request.POST['character_name']
-            sentence = request.POST['sentence']
-            form = Phrase(scenes=scene, character_name=character_name, sentence=sentence, order=order)
-            form.save()
-            return redirect(f'/france/edit-dialog/{id}/0/edit')
-
 
         situation = Scenes.objects.get(id=id)
         dialog_list = Phrase.objects.filter(scenes=id).order_by('order')
@@ -120,7 +107,6 @@ def edit_dialog(request, id, phrase, mode):
         context = {
             'dialog_list': dialog_list,
             'situation': situation,
-            'form': PhraseCreateForm,
             'test': test,
             }
 
@@ -128,3 +114,52 @@ def edit_dialog(request, id, phrase, mode):
 
     else:
         return redirect('/france/')
+##############################
+
+def add_phrase(request, scene_pk):
+
+
+    if request.method == 'POST':
+        scene = Scenes.objects.get(id=scene_pk)
+        name = request.POST['character_name']
+        sentence = request.POST['sentence']
+
+        phrases = Phrase.objects.filter(scenes=scene_pk).all()
+
+        if len(phrases) == 0:
+            order_num = 1
+        else:
+            order_max = [phrase.order for phrase in phrases]
+            order_num = max(order_max)
+
+        form = Phrase(scenes=scene, character_name=name, sentence=sentence, order=order_num)
+        
+        form.save()
+
+        return redirect(f'/france/edit-dialog/{scene_pk}/0/edit')
+
+    context = {
+        'title': 'Dodaj wypowiedź',
+        'form': PhraseCreateForm,
+        }
+    return render(request, 'france/edit_phrase.html', context)
+
+
+def edit_phrase(request, scene_pk, phrase_order):
+
+    phrase = Phrase.objects.get(scenes=scene_pk, order=phrase_order)
+
+    if request.method == 'POST':
+        phrase.character_name = request.POST['character_name']
+        phrase.sentence = request.POST['sentence']
+
+        phrase.save()
+
+        return redirect(f'/france/edit-dialog/{scene_pk}/0/edit')
+        
+
+    context = {
+        'title': 'Edytuj wypowiedź',
+        'form': PhraseCreateForm(instance=phrase),
+        }
+    return render(request, 'france/edit_phrase.html', context)
