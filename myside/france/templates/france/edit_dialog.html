@@ -21,6 +21,12 @@ Dialog
     <h4>{{ test }}</h4>
     {% endif %}
 </div>
+<hr>
+<div>
+    <h2>Dodaj element</h2>
+    <a href="{% url 'add-phrase' situation.id %}" class="btn btn-success">Add sentence</a>
+    <a href="{% url 'add-world' situation.id %}" class="btn btn-success">Add world</a>
+</div>
 <br><hr><br>
 <div>
 
@@ -45,11 +51,7 @@ Dialog
     </div>
     {% endfor%}
 </div>
-<hr>
-<div>
-    <h2>Dodaj sentencje</h2>
-    <a href="{% url 'add-phrase' situation.id %}" class="btn btn-success">Add</a>
-</div>
+
 {% endblock %}
 
 {% block scripts %}

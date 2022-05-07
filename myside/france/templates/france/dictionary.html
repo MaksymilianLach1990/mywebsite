@@ -12,26 +12,25 @@ Add dialog
 
 {% block main %}
 
+<br><hr><br>
 <div>
-    <h2>Dodaj nowe słowo</h2>
+    <h2>Wyszukaj słowo</h2>
     <form method="post">
         {% csrf_token %}
-
-        {{ form|crispy }}
         
-        <button type="submit" class="btn btn-success">Add</button>
+        {{ form|crispy }}
     </form>
 </div>
 <br><hr><br>
 <div>
-    <h2>Wyszukaj słowo</h2>
-    <label for="search-world">Wpisz szukane słowo</label><br>
-    <input type="text" id="search-world" name="search-world">
-    <label for="">Wybierz język w jakim jest słowo</label>
-    <input type="radio" id="fr" name="language">FR</input>
-    <input type="radio" id="pl" name="language">PL</input>
-    <label for="world-description" id="label-description"></label>
-    <p id="world-description"></p>
+    <h2>Dodaj słowo</h2>
+    <a href="{% url 'add-world' 0 %}" class="btn btn-primary">Add world</a>
+</div>
+<br><hr><br>
+<div>
+    <h3>Słowo</h3>
+    <p>|{{ world1 }} - {{ worldtranslate }}|</p>
+    <p>|{{ worlddescription }}|</p>
 </div>
 <br><hr><br>
 <div>
@@ -41,6 +40,7 @@ Add dialog
                 <th>World pl</th>
                 <th>World fr</th>
                 <th>Description</th>
+                <th>Phonetic</th>
             </tr>
         </thead>
         <tbody>
@@ -49,6 +49,7 @@ Add dialog
                 <td>{{ world.world_pl }}</td>
                 <td>{{ world.world_fr }}</td>
                 <td>{{ world.description }}</td>
+                <td>{{ world.phonetic }}</td>
             </tr>
             {% endfor %}
         </tbody>

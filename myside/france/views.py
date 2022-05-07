@@ -42,18 +42,41 @@ def add_scenes(request):
 
 def dictionary(request):
 
+    context = {
+        'dictionary': World.objects.all(),
+        }
+
+    return render(request, 'france/dictionary.html', context)
+
+def add_world(request, scene_pk):
+
     if request.method == 'POST':
         form = WorldCreateForm(request.POST)
         if form.is_valid():
             form.save()
 
             return redirect('/france/dictionary')
+    if scene_pk == 0:
+        form = WorldCreateForm
+    else:
+        scene = Scenes.objects.get(id=scene_pk)
+        form = WorldCreateForm(instance=World(scenes=scene))
+    
     context = {
-        'form': WorldCreateForm,
-        'dictionary': World.objects.all(),
+        'title': 'Dodaj słowo',
+        'form': form,
         }
 
-    return render(request, 'france/dictionary.html', context)
+
+    return render(request, 'france/edit_world.html', context)
+
+def edit_world(request, world_pk):
+
+    context ={
+
+    }
+
+    return render(request, 'france/edit_world.html', context)
 
 def dialog(request, id):
     
@@ -163,3 +186,4 @@ def edit_phrase(request, scene_pk, phrase_order):
         'form': PhraseCreateForm(instance=phrase),
         }
     return render(request, 'france/edit_phrase.html', context)
+
