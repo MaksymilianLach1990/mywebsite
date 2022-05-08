@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Scenes, Phrase, World
+from .models import Scenes, Phrase, Word
 
 # Register your models here.
 
@@ -17,8 +17,8 @@ class EventAdmin(admin.ModelAdmin):
     ordering = ('scenes', 'created_at')
 
 
-@admin.register(World)
+@admin.register(Word)
 class EventAdmin(admin.ModelAdmin):
-    fields = ('scenes', 'world_pl', 'world_fr', 'description', 'phonetic')
-    list_display = ('world_pl', 'world_fr', 'description', 'phonetic')
-    ordering = ('world_pl', 'world_fr')
+    fields = ('scenes', 'word_pl', 'word_fr', 'description', 'phonetic')
+    list_display = ('word_pl', 'word_fr', 'description', 'phonetic')
+    ordering = ('word_pl', 'word_fr')

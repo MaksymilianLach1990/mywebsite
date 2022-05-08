@@ -52,15 +52,15 @@ class Phrase(models.Model):
         phrase_new.order = phrase_num+1
         phrase_new.save()
 
-class World(models.Model):
+class Word(models.Model):
     class Meta:
-        ordering = ('world_pl', 'world_fr')
+        ordering = ('word_pl', 'word_fr')
 
     scenes = models.ForeignKey(Scenes, models.CASCADE, null=True, blank=True)
-    world_pl = models.CharField(max_length=100)
-    world_fr = models.CharField(max_length=100)
+    word_pl = models.CharField(max_length=100)
+    word_fr = models.CharField(max_length=100)
     description = models.TextField(max_length=400)
     phonetic = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'{self.world_pl} - {self.world_fr}'
+        return f'{self.word_pl} - {self.word_fr}'

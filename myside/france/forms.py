@@ -1,5 +1,5 @@
 from django import forms
-from .models import Scenes, Phrase, World
+from .models import Scenes, Phrase, Word
 
 class ScenesCreateForm(forms.ModelForm):
     class Meta:
@@ -13,7 +13,7 @@ class PhraseCreateForm(forms.ModelForm):
         fields = ('character_name', 'sentence')
 
 
-class WorldCreateForm(forms.ModelForm):
+class WordCreateForm(forms.ModelForm):
     class Meta:
-        model = World
-        fields = ('scenes', 'world_pl', 'world_fr', 'description', 'phonetic')
+        model = Word
+        fields = ('scenes', 'word_pl', 'word_fr', 'description', 'phonetic')

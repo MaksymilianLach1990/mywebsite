@@ -12,14 +12,10 @@ Add scenes
 
 {% block main %}
 <div>
-    <h3>Dodaj scenkę</h3>
+    <h2>{{ title }}</h2>
 </div>
 <br><hr><br>
 <div>
-    <h4>Szablon do wypełnienia</h4>
-    {% if message %}
-    <h2>{{ message }}</h2>
-    {% endif %}
     <form method="post">
         {% csrf_token %}
 

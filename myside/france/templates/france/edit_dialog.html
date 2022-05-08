@@ -34,6 +34,7 @@ Dialog
     <h3>{{ situation.description }}</h3>
     <br>
     <a href="{% url 'edit-dialog' situation.id 0 'delete-scene' %}" class="btn btn-danger">Delete Scene</a>
+    <a href="{% url 'edit-scenes' situation.id %}" class="btn btn-primary">Edit Scene</a>
     <br>
     <br>
     {% for sentence in dialog_list %}

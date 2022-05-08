@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import ScenesCreateForm, PhraseCreateForm, WorldCreateForm
-from .models import Scenes, Phrase, World
+from .forms import ScenesCreateForm, PhraseCreateForm, WordCreateForm
+from .models import Scenes, Phrase, Word
 
 # Create your views here.
 
@@ -30,68 +30,94 @@ def add_scenes(request):
         if form.is_valid():
             form.save()
             scene_id = Scenes.objects.filter(name=request.POST['name']).first()
-            print(scene_id.id)
             return redirect(f'/france/dialog/{scene_id.id}')
         else:
             return redirect("/france/add-scenes")
 
     context = {
+        'title': "Dodaj Scenkę",
         'form': ScenesCreateForm,
         }
-    return render(request, 'france/add_scenes.html', context)
+    return render(request, 'france/edit_scenes.html', context)
 
+def edit_scenes(request, scene_id):
+
+    scene = Scenes.objects.get(id=scene_id)
+    
+    if request.method == 'POST':
+        scene.name = request.POST['name']
+        scene.description = request.POST['description'] 
+        scene.save()
+
+        return redirect(f'/france/dialog/{scene_id}')
+
+    form = ScenesCreateForm(instance=scene)
+
+    context ={
+        'title': 'Edytuj Scenkę',
+        'form': form,
+    }
+
+    return render(request, 'france/edit_scenes.html', context)
+    
 def dictionary(request):
 
     context = {
-        'dictionary': World.objects.all(),
+        'dictionary': Word.objects.all(),
         }
 
     return render(request, 'france/dictionary.html', context)
 
-def add_world(request, scene_pk):
+def add_word(request, scene_pk):
 
     if request.method == 'POST':
-        form = WorldCreateForm(request.POST)
+        form = WordCreateForm(request.POST)
         if form.is_valid():
             form.save()
 
             return redirect('/france/dictionary')
     if scene_pk == 0:
-        form = WorldCreateForm
+        form = WordCreateForm
     else:
         scene = Scenes.objects.get(id=scene_pk)
-        form = WorldCreateForm(instance=World(scenes=scene))
+        form = WordCreateForm(instance=Word(scenes=scene))
     
     context = {
         'title': 'Dodaj słowo',
         'form': form,
         }
 
-    return render(request, 'france/edit_world.html', context)
+    return render(request, 'france/edit_word.html', context)
 
-def edit_world(request, world_id):
+def edit_word(request, word_id):
 
+    word = Word.objects.get(id=word_id)
+    
     if request.method == 'POST':
-        form = WorldCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
+        scene = Scenes.objects.get(id=request.POST['scenes'])
+        word.scenes = scene
+        word.world_pl = request.POST['word_pl']
+        word.world_fr = request.POST['word_fr']
+        word.description = request.POST['description']
+        word.phonetic = request.POST['phonetic']
+        
+        word.save()
 
-            return redirect('/france/dictionary')
+        return redirect('/france/dictionary')
 
-    world = World.objects.get(id=world_id)
-    form = WorldCreateForm(instance=world)
+    form = WordCreateForm(instance=word)
 
     context ={
         'title': 'Edytuj słowo',
         'form': form,
     }
 
-    return render(request, 'france/edit_world.html', context)
+    return render(request, 'france/edit_word.html', context)
 
-def delete_world(request, world_id):
+def delete_word(request, word_id):
 
-    world = World.objects.get(id=world_id)
-    world.delete()
+    word = Word.objects.get(id=word_id)
+    word.delete()
 
     return redirect('/france/dictionary')
 
