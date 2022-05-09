@@ -1,5 +1,6 @@
 {% extends 'france/index.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Home page
@@ -13,6 +14,7 @@ Home page
 <div id="page-title">
     
     <h2>Strona domowa France</h2>
+
 </div>
 
 <div class="album py-5 bg-light">
@@ -21,8 +23,11 @@ Home page
             {% for scene in scenes_list %}
             <div class="col">
                 <div class="card shadow-sm">
+                    {% if scene.scene_image %}
+                    <img src="{{ scene.scene_image }}" alt="{{ scene.scene_image }}">
+                    {% else %}
                     <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Obrazek</text></svg>
-      
+                    {% endif %}
                     <div class="card-body">
                         <p class="card-text"><b>{{ scene.name }}</b><br>{{ scene.description }}</p>
                         <div class="d-flex justify-content-between align-items-center">
@@ -36,12 +41,7 @@ Home page
             </div>
             {% endfor %}
         </div>
-
-    </div>
-    
-
-
-    
+    </div>  
 </div>
 
 <!-- <div class="container">

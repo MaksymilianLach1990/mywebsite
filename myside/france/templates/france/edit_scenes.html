@@ -16,7 +16,7 @@ Edit/Add scenes
 </div>
 <br><hr><br>
 <div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         {{ form|crispy }}

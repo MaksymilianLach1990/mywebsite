@@ -9,6 +9,7 @@ class Scenes(models.Model):
 
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(max_length=300)
+    scene_image = models.URLField(null=True, blank=True)
     created_at = models.DateField(default=datetime.date.today, db_index=True)
 
     def __str__(self):

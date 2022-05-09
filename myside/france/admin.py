@@ -5,7 +5,7 @@ from .models import Scenes, Phrase, Word
 
 @admin.register(Scenes)
 class EventAdmin(admin.ModelAdmin):
-    fields = ('name', 'description', 'created_at')
+    fields = ('name', 'description', 'created_at', 'scene_image')
     list_display = ('name', 'description', 'created_at')
     ordering = ('name', 'created_at')
 

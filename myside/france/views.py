@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from .forms import ScenesCreateForm, PhraseCreateForm, WordCreateForm, SearchWordForm
 from .models import Scenes, Phrase, Word
 
+
 # Create your views here.
 
 # Home page section
@@ -12,7 +13,9 @@ def home(request):
 
     scenes_list = Scenes.objects.all()
 
-    context = {'scenes_list': scenes_list}
+    context = {
+        'scenes_list': scenes_list,
+        }
 
     return render(request, 'france/home.html', context)
 
@@ -34,7 +37,7 @@ def scenes_list(request):
 def add_scenes(request):
 
     if request.method == 'POST':
-        form = ScenesCreateForm(request.POST)
+        form = ScenesCreateForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             scene_id = Scenes.objects.filter(name=request.POST['name']).first()
@@ -82,7 +85,7 @@ def edit_scenes(request, scene_id):
     context ={
         'title': 'Edytuj Scenkę',
         'form': form,
-    }
+        }
 
     return render(request, 'france/edit_scenes.html', context)
 
@@ -282,7 +285,7 @@ def edit_word(request, word_id):
     context ={
         'title': 'Edytuj słowo',
         'form': form,
-    }
+        }
 
     return render(request, 'france/edit_word.html', context)
 
