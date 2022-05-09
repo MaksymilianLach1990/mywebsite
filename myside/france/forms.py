@@ -17,3 +17,13 @@ class WordCreateForm(forms.ModelForm):
     class Meta:
         model = Word
         fields = ('scenes', 'word_pl', 'word_fr', 'description', 'phonetic')
+
+
+class SearchWordForm(forms.Form):
+    CHOICES = (
+        ('pl', 'polonais'),
+        ('fr', 'français'),
+    )
+
+    word = forms.CharField(max_length=100)
+    language = forms.ChoiceField(choices=CHOICES)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 
-from .forms import ScenesCreateForm, PhraseCreateForm, WordCreateForm
+from .forms import ScenesCreateForm, PhraseCreateForm, WordCreateForm, SearchWordForm
 from .models import Scenes, Phrase, Word
 
 # Create your views here.
@@ -197,8 +197,33 @@ def phrase_order_down( request, phrase_order, scene_id):
 # Everyone can see
 def dictionary(request):
 
+    search_word = ''
+
+    try:
+        if request.method == 'POST':
+            if request.POST['language'] == 'fr':
+                word = Word.objects.get(word_fr=request.POST['word'].lower())
+                search_word = {
+                    'word': word.word_fr,
+                    'translate': word.word_pl,
+                    'phonetic': word.phonetic,
+                    'description': word.description,
+                }
+            if request.POST['language'] == 'pl':
+                word = Word.objects.get(word_pl=request.POST['word'].lower())
+                search_word = {
+                    'word': word.word_pl,
+                    'translate': word.word_fr,
+                    'phonetic': word.phonetic,
+                    'description': word.description,
+                }
+    except:
+        search_word = {'description': "Sorry, something went wrong! Try again."}
+
     context = {
         'dictionary': Word.objects.all(),
+        'form': SearchWordForm,
+        'search_word': search_word,
         }
 
     return render(request, 'france/dictionary.html', context)
@@ -210,7 +235,10 @@ def add_word(request, scene_id):
     if request.method == 'POST':
         form = WordCreateForm(request.POST)
         if form.is_valid():
-            form.save()
+            word = form.save(commit=False)
+            word.word_pl = word.word_pl.lower()
+            word.word_fr = word.word_fr.lower()
+            word.save()
         if scene_id == 0:
             return redirect('/france/dictionary')
         else:

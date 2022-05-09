@@ -11,7 +11,9 @@ Dictionary
 {% endblock %}
 
 {% block main %}
-
+<div>
+    <h2>To jest słownik zawierający wszystkie słowa ze scenek</h2>
+</div>
 <br><hr><br>
 <div>
     <h2>Wyszukaj słowo</h2>
@@ -19,8 +21,18 @@ Dictionary
         {% csrf_token %}
         
         {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Search</button>
     </form>
 </div>
+{% if search_word %}
+<br><hr><br>
+<div>
+    <h3>Słowo</h3>
+    <h4>{{ search_word.word}} - {{ search_word.translate }}</h4>
+    <h5>{{ search_word.phonetic }}</h5>
+    <h4>{{ search_word.description }}</h4>
+</div>
+{% endif %}
 {% if user.is_staff or perms.france.add_word %}
 <br><hr><br>
 <div>
@@ -29,12 +41,7 @@ Dictionary
 </div>
 {% endif%}
 <br><hr><br>
-<div>
-    <h3>Słowo</h3>
-    <p>|{{ word1 }} - {{ wordtranslate }}|</p>
-    <p>|{{ worddescription }}|</p>
-</div>
-<br><hr><br>
+
 <div>
     <table>
         <thead>
