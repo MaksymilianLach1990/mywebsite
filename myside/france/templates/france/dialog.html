@@ -17,8 +17,10 @@ Dialog
 <br><hr><br>
 <div>
 
-    <h2>{{ situation.name }} | 
-    <a class="btn btn-primary" href="{% url 'edit-dialog' situation.id 0 'edit' %}">Edit</a></h2>
+    <h2>{{ situation.name }}
+    {% if user.is_staff %} 
+    | <a class="btn btn-primary" href="{% url 'edit-dialog' situation.id %}">Edit</a></h2>
+    {% endif %}
     <h3>{{ situation.description }}</h3>
     {% for sentence in dialog_list %}
     <div>

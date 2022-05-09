@@ -19,8 +19,8 @@ class Phrase(models.Model):
     class Meta:
         ordering = ('scenes', 'order')
 
-    scenes = models.ForeignKey(Scenes, models.CASCADE, null=True, blank=True)
-    character_name = models.CharField(max_length=100, null=False)
+    scenes = models.ForeignKey(Scenes, models.CASCADE)
+    character_name = models.CharField(max_length=100)
     sentence = models.TextField(max_length=400)
     order = models.IntegerField()
     created_at = models.DateField(default=datetime.date.today, db_index=True)
@@ -51,16 +51,17 @@ class Phrase(models.Model):
         phrase_new = Phrase.objects.filter(scenes=scene_num, order=0).first()
         phrase_new.order = phrase_num+1
         phrase_new.save()
+    
 
 class Word(models.Model):
     class Meta:
         ordering = ('word_pl', 'word_fr')
 
-    scenes = models.ForeignKey(Scenes, models.CASCADE, null=True, blank=True)
+    scenes = models.ForeignKey(Scenes, models.CASCADE)
     word_pl = models.CharField(max_length=100)
     word_fr = models.CharField(max_length=100)
-    description = models.TextField(max_length=400)
-    phonetic = models.CharField(max_length=100)
+    description = models.TextField(max_length=400, blank=True)
+    phonetic = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return f'{self.word_pl} - {self.word_fr}'

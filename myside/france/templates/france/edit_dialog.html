@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Dialog
+Edit Dialog
 {% endblock %}
 
 {% block link %}
@@ -25,7 +25,7 @@ Dialog
 <div>
     <h2>Dodaj element</h2>
     <a href="{% url 'add-phrase' situation.id %}" class="btn btn-success">Add sentence</a>
-    <a href="{% url 'add-world' situation.id %}" class="btn btn-success">Add world</a>
+    <a href="{% url 'add-word' situation.id %}" class="btn btn-success">Add word</a>
 </div>
 <br><hr><br>
 <div>
@@ -33,7 +33,7 @@ Dialog
     <h2>{{ situation.name }}</h2>
     <h3>{{ situation.description }}</h3>
     <br>
-    <a href="{% url 'edit-dialog' situation.id 0 'delete-scene' %}" class="btn btn-danger">Delete Scene</a>
+    <a href="{% url 'delete-scenes' situation.id %}" class="btn btn-danger" title="Kliknięcie spowoduje trwałe usunięcie tej scenki i wszystkich elementów które są powiązane z nią">Delete Scene</a>
     <a href="{% url 'edit-scenes' situation.id %}" class="btn btn-primary">Edit Scene</a>
     <br>
     <br>
@@ -42,12 +42,10 @@ Dialog
         <h2><b>{{ sentence.character_name }}</b></h2><br>
         <h3>{{ sentence.sentence }}</h3>
         <div>
-            <a href="{% url 'edit-dialog' situation.id sentence.id 'delete-phrase' %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'delete-phrase' situation.id sentence.id %}" class="btn btn-danger" title="Kliknięcie spowoduje stałe usunięcie tego wpisu">Delete</a>
             <a href="{% url 'edit-phrase' situation.id sentence.order %}" class="btn btn-success">Edit</a>
-            <a href="{% url 'edit-dialog' situation.id sentence.order 'order-up' %}" class="btn btn-success">Up</a>
-            <a href="{% url 'edit-dialog' situation.id sentence.order 'order-down' %}" class="btn btn-success">Down</a>
-
-
+            <a href="{% url 'phrase-order-up' situation.id sentence.order %}" class="btn btn-success">Up</a>
+            <a href="{% url 'phrase-order-down' situation.id sentence.order %}" class="btn btn-success">Down</a>
         </div>
     </div>
     {% endfor%}

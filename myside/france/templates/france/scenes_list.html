@@ -13,6 +13,9 @@ Scenes
 {% block main %}
 <div>
     <h3>Scenki</h3>
+    {% if user.is_staff %}
+    <a href="{% url 'add-scenes' %}" class="btn btn-primary">Add Scenes</a>
+    {% endif %}
 </div>
 <br><hr><br>
 <div>

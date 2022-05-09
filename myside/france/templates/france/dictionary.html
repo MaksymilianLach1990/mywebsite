@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Add dialog
+Dictionary
 {% endblock %}
 
 {% block link %}
@@ -21,41 +21,47 @@ Add dialog
         {{ form|crispy }}
     </form>
 </div>
+{% if user.is_staff %}
 <br><hr><br>
 <div>
     <h2>Dodaj słowo</h2>
-    <a href="{% url 'add-world' 0 %}" class="btn btn-primary">Add world</a>
+    <a href="{% url 'add-word' 0 %}" class="btn btn-primary">Add word</a>
 </div>
+{% endif%}
 <br><hr><br>
 <div>
     <h3>Słowo</h3>
-    <p>|{{ world1 }} - {{ worldtranslate }}|</p>
-    <p>|{{ worlddescription }}|</p>
+    <p>|{{ word1 }} - {{ wordtranslate }}|</p>
+    <p>|{{ worddescription }}|</p>
 </div>
 <br><hr><br>
 <div>
     <table>
         <thead>
             <tr>
-                <th>World pl</th>
-                <th>World fr</th>
+                <th>Word pl</th>
+                <th>Word fr</th>
                 <th>Description</th>
                 <th>Phonetic</th>
+                {% if user.is_staff %}
                 <th>Operation</th>
+                {% endif%}
             </tr>
         </thead>
         <tbody>
-            {% for world in dictionary %}
+            {% for word in dictionary %}
             <tr>
-                <td>{{ world.world_pl }}</td>
-                <td>{{ world.world_fr }}</td>
-                <td>{{ world.description }}</td>
-                <td>{{ world.phonetic }}</td>
+                <td>{{ word.word_pl }}</td>
+                <td>{{ word.word_fr }}</td>
+                <td>{{ word.description }}</td>
+                <td>{{ word.phonetic }}</td>
+                {% if user.is_staff %}
                 <td>
-                    <a href="{% url 'edit-world' world.id %}" class="btn btn-primary">Edit world</a>
-                    <a href="{% url 'delete-world' world.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'edit-word' word.id %}" class="btn btn-primary">Edit word</a>
+                    <a href="{% url 'delete-word' word.id %}" class="btn btn-danger" title="Jeśli klikniesz usuniesz to słowo na stałe">Delete</a>
 
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
