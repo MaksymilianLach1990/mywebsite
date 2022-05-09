@@ -21,7 +21,7 @@ Dictionary
         {{ form|crispy }}
     </form>
 </div>
-{% if user.is_staff %}
+{% if user.is_staff or perms.france.add_word %}
 <br><hr><br>
 <div>
     <h2>Dodaj słowo</h2>
@@ -55,11 +55,14 @@ Dictionary
                 <td>{{ word.word_fr }}</td>
                 <td>{{ word.description }}</td>
                 <td>{{ word.phonetic }}</td>
-                {% if user.is_staff %}
+                {% if user.is_staff or perms.france.change_word or perms.france.delete_word %}
                 <td>
+                    {% if perms.france.change_word %}
                     <a href="{% url 'edit-word' word.id %}" class="btn btn-primary">Edit word</a>
+                    {% endif %}
+                    {% if perms.france.delete_word %}
                     <a href="{% url 'delete-word' word.id %}" class="btn btn-danger" title="Jeśli klikniesz usuniesz to słowo na stałe">Delete</a>
-
+                    {% endif %}
                 </td>
                 {% endif %}
             </tr>

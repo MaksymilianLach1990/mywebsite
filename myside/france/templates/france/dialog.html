@@ -18,7 +18,7 @@ Dialog
 <div>
 
     <h2>{{ situation.name }}
-    {% if user.is_staff %} 
+    {% if user.is_staff or perms.france.change_scenes %} 
     | <a class="btn btn-primary" href="{% url 'edit-dialog' situation.id %}">Edit</a></h2>
     {% endif %}
     <h3>{{ situation.description }}</h3>

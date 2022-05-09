@@ -30,6 +30,7 @@ def scenes_list(request):
     return render(request, 'france/scenes_list.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.add_scenes", login_url="/france", raise_exception=True)
 def add_scenes(request):
 
     if request.method == 'POST':
@@ -60,8 +61,11 @@ def dialog(request, scene_id):
 
     return render(request, 'france/dialog.html', context)
 
+
+
 # Edit Scenes section
 @login_required(login_url="/login")
+@permission_required("france.change_scenes", login_url="/france", raise_exception=True)
 def edit_scenes(request, scene_id):
 
     scene = Scenes.objects.get(id=scene_id)
@@ -71,7 +75,7 @@ def edit_scenes(request, scene_id):
         scene.description = request.POST['description'] 
         scene.save()
 
-        return redirect(f'/france/dialog/{scene_id}')
+        return redirect(f'/france/edit-dialog/{scene_id}')
 
     form = ScenesCreateForm(instance=scene)
 
@@ -83,6 +87,7 @@ def edit_scenes(request, scene_id):
     return render(request, 'france/edit_scenes.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.delete_scenes", login_url="/france", raise_exception=True)
 def delete_scenes(request, scene_id):
 
     scene = Scenes.objects.get(id=scene_id)
@@ -90,8 +95,27 @@ def delete_scenes(request, scene_id):
 
     return redirect('/france/scenes-list')
 
-# Edit Phrase section
+# Edit Dialog section
 @login_required(login_url="/login")
+@permission_required("france.change_scenes", login_url="/france", raise_exception=True)
+def edit_dialog(request, scene_id):
+
+    test = "Message"
+
+    situation = Scenes.objects.get(id=scene_id)
+    dialog_list = Phrase.objects.filter(scenes=scene_id).order_by('order')
+
+    context = {
+        'dialog_list': dialog_list,
+        'situation': situation,
+        'test': test,
+        }
+
+    return render(request, 'france/edit_dialog.html', context)
+
+
+@login_required(login_url="/login")
+@permission_required("france.add_phrase", login_url="/france", raise_exception=True)
 def add_phrase(request, scene_id):
 
     if request.method == 'POST':
@@ -120,6 +144,7 @@ def add_phrase(request, scene_id):
     return render(request, 'france/edit_phrase.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.change_phrase", login_url="/france", raise_exception=True)
 def edit_phrase(request, scene_id, phrase_order):
 
     phrase = Phrase.objects.get(scenes=scene_id, order=phrase_order)
@@ -140,6 +165,7 @@ def edit_phrase(request, scene_id, phrase_order):
     return render(request, 'france/edit_phrase.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.delete_phrase", login_url="/france", raise_exception=True)
 def delete_phrase(request, scene_id, phrase_id):
 
     phrase = Phrase.objects.get(id=phrase_id)
@@ -148,22 +174,7 @@ def delete_phrase(request, scene_id, phrase_id):
     return redirect(f'/france/edit-dialog/{scene_id}')
 
 @login_required(login_url="/login")
-def edit_dialog(request, scene_id):
-
-    test = "Message"
-
-    situation = Scenes.objects.get(id=scene_id)
-    dialog_list = Phrase.objects.filter(scenes=scene_id).order_by('order')
-
-    context = {
-        'dialog_list': dialog_list,
-        'situation': situation,
-        'test': test,
-        }
-
-    return render(request, 'france/edit_dialog.html', context)
-
-@login_required(login_url="/login")
+@permission_required("france.change_phrase", login_url="/france", raise_exception=True)
 def phrase_order_up(request, scene_id, phrase_order):
     if phrase_order == 1:
         return redirect(f'/france/edit-dialog/{scene_id}')
@@ -173,6 +184,7 @@ def phrase_order_up(request, scene_id, phrase_order):
     return redirect(f'/france/edit-dialog/{scene_id}')
 
 @login_required(login_url="/login")
+@permission_required("france.change_phrase", login_url="/france", raise_exception=True)
 def phrase_order_down( request, phrase_order, scene_id):
     if phrase_order == max([phrase.order for phrase in Phrase.objects.filter(scenes=scene_id).all()]):
         return redirect(f'/france/edit-dialog/{scene_id}')
@@ -192,6 +204,7 @@ def dictionary(request):
     return render(request, 'france/dictionary.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.add_word", login_url="/france", raise_exception=True)
 def add_word(request, scene_id):
 
     if request.method == 'POST':
@@ -216,6 +229,7 @@ def add_word(request, scene_id):
     return render(request, 'france/edit_word.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.change_word", login_url="/france", raise_exception=True)
 def edit_word(request, word_id):
 
     word = Word.objects.get(id=word_id)
@@ -245,6 +259,7 @@ def edit_word(request, word_id):
     return render(request, 'france/edit_word.html', context)
 
 @login_required(login_url="/login")
+@permission_required("france.delete_word", login_url="/france", raise_exception=True)
 def delete_word(request, word_id):
 
     word = Word.objects.get(id=word_id)
